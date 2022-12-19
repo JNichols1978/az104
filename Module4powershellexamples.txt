@@ -1,0 +1,20 @@
+#create a new resource group
+new-azresourcegroup -resourcegroupname rg4 -location Eastus
+
+#Create a new VNet
+$vnet=New-AzVirtualNetwork -ResourceGroupName rg4 -Location EastUS -Name myVNet2 -AddressPrefix 10.0.0.0/16
+
+#display the Vnet
+Get-AzVirtualNetwork -Name myVNet2
+
+#Create a new subnet on the Vnet
+$mysubnet=Add-AzVirtualNetworkSubnetConfig -Name mySubnet2 -AddressPrefix 10.0.0.0/24 -VirtualNetwork $vnet
+
+#display the Subnet
+Get-AzVirtualNetworkSubnetConfig -Name mySubnet2 -VirtualNetwork $vnet
+
+#associate the sutnet to the Vnet
+$mysubnet|set-azvirtualnetwork 
+
+#display the information
+(get-azvirtualnetwork).subnets

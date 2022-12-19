@@ -1,0 +1,8 @@
+#Examples of adding resource groups with tags
+New-AzResourceGroup -Name DevRG -Location "East US" -Tag @{Environment="Dev"; Department="Development"}
+New-AzResourceGroup -Name TestRG -Location "East US" -Tag @{Environment="Test"; Department="Testing"}
+New-AzResourceGroup -Name ProdRG -Location "East US" -Tag @{Environment="Prod"; Department="Production"}
+
+#Diplay your resource groups
+
+Get-AzResourceGroup|Format-Table

@@ -1,0 +1,58 @@
+#Get your subscription information
+
+# Create a new management group.
+Get-AzSubscription
+
+
+New-AzManagementGroup -GroupName 'IT' -DisplayName 'IT'
+
+Locks
+# Create Demo ResourceGroup
+New-AzResourceGroup -Name LockDemoRG -Location "East US"
+
+
+# To lock a resource, provide the name of the resource, its resource type, and its resource group name.
+# New-AzResourceLock -LockLevel CanNotDelete -LockName LockSite -ResourceName examplesite -ResourceType Microsoft.Web/sites -ResourceGroupName exampleresourcegroup
+
+# To lock a resource group, provide the name of the resource group.
+New-AzResourceLock -LockName LockGroup -LockLevel CanNotDelete -ResourceGroupName LockDemoRG
+
+# To get information about a lock
+Get-AzResourceLock
+
+# To get all locks for a resource
+# Get-AzResourceLock -ResourceName LockDemoRG -ResourceType Microsoft.Web/sites -ResourceGroupName LockDemoRG
+
+# To get all locks for a resource group
+Get-AzResourceLock -ResourceGroupName LockDemoRG
+
+# To delete a lock
+# $lockId = (Get-AzResourceLock -ResourceGroupName LockDemoRG -ResourceName examplesite -ResourceType Microsoft.Web/sites).LockId
+# Remove-AzResourceLock -LockId $lockId
+
+$rg = "LockDemoRG"
+Get-AzResourceLock | where ResourceGroupName -eq $rg | Remove-AzResourceLock -Force
+-------------------------------------------------------
+
+CLI
+# lock a resource
+# az lock create --name LockSite --lock-type CanNotDelete --resource-group LockDemoRG --resource-name examplesite --resource-type Microsoft.Web/sites
+
+# To lock a resource group
+az lock create --name LockRG --lock-type CanNotDelete --resource-group LockDemoRG
+
+# To get information about a lock
+az lock list
+
+# To get all locks for a resource
+# az lock list --resource-group LockDemoRG --resource-name examplesite --namespace Microsoft.Web --resource-type sites --parent ""
+
+# To get all locks for a resource group
+az lock list --resource-group LockDemoRG
+
+# To delete a lock on Resource
+# lockid=$(az lock show --name LockSite --resource-group LockDemoRG --resource-type Microsoft.Web/sites --resource-name examplesite --output tsv --query id)
+# az lock delete --ids $lockid
+
+# To delete a lock on Resource Group
+az lock delete --name LockRG --resource-group LockDemoRG

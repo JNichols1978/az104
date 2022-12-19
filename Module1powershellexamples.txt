@@ -1,0 +1,23 @@
+$Tenant = "studentoutlook.onmicrosoft.com"
+Install-Module -Name AzureAD
+Connect-Azuread -Tenant $Tenant
+
+$domain = "studentoutlook.onmicrosoft.com"
+$PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
+$PasswordProfile.Password = "Pa55w.rd"
+New-AzureADUser -DisplayName "PamW" -PasswordProfile $PasswordProfile -UserPrincipalName "PamW@$domain" -AccountEnabled $true -MailNickName "PamW" -Department "Sales" -GivenName "Pam Waters"
+-----------------------------------------------------------------------------
+New-Item c:\Scripts -Type directory
+# Create Users.csv file in c:\scripts folder
+# Add following to users.csv file
+
+DisplayName,FirstName,LastName,UserPrincipalName,UsageLocation,AccountSkuId
+Ian Waters,Ian,Waters,ianw@<tenant>.onmicrosoft.com,US,<tenant>:ENTERPRISEPREMIUM
+Michael Freeman,Michael,Freeman,michaelf@<tenant>.onmicrosoft.com,US,<tenant>:ENTERPRISEPREMIUM
+Andy Waters,Andy,Waters,andyw@<tenant>.onmicrosoft.com,US,<tenant>:ENTERPRISEPREMIUM
+Nic Horrocks,Nic,Horrocks,nich@<tenant>.onmicrosoft.com,US,<tenant>:ENTERPRISEPACK
+Tom Owers,Tom,Owers,tomo@<tenant>.onmicrosoft.com,US,<tenant>:ENTERPRISEPACK
+Fay Williams,Fay,Williams,fayw@<tenant>.onmicrosoft.com,US,<tenant>:ENTERPRISEPACK
+
+Search on <tenant>, replace with your TenantPrefix
+-----------------------------------------------------------------------------
